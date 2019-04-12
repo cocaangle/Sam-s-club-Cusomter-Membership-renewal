@@ -70,14 +70,25 @@ top_member
 # So these members maybe more likely to renew their membership as they spend more on than others in Sam's club, who maybe the loyalty customers for Sam
 # club, to confirm the assumption, we could join these top_membertable with member_train to see the account renew status
 
-#Join table
+#Join table 
+# Renewed VS top spended member
 df=merge(x=each_member,y=member_train,by="MEMBERSHIP_ID",all.x=TRUE)
 df=df%>%arrange(desc(tot_mem))
 top_df=df[1:3879,]
 table(top_df$RENEW_IND)
 pct=262/3879
 pct
-
+write.csv(df,file="top_fifty_percent_users.csv")
 # So we see on the top 50% people who spend most , only 7% of them not renewed, which indicate people who spend more are more likely to renew their memership
 # For next step, we can check the pattern of these top people's tenure years, plus_status, market area and categories of the items they buy most to get more 
 # insights.
+
+#Renewed VS tender type
+df1=merge(x=tender_train,y=member_train,by="MEMBERSHIP_ID",all.x=TRUE)
+renew_df1=df1%>%filter(RENEW_IND!="UNRENEWED")
+type_df=as.data.frame(table(renew_df1$TENDER_TYPE_DESC))
+type_df=type_df%>%arrange(desc(Freq))%>%head(8)
+ggplot(type_df, aes(x=Var1,y = Freq)) +geom_bar(stat = "identity",fill="#FF6666")
+#Same as as the count of tender type in total sample: Debit card>Visa>Sam's consumer credit
+# So there may be no difference in tender type for people who renew their membership or who not renew
+
