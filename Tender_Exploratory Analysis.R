@@ -1,8 +1,9 @@
+#load packages
 library(data.table)
 library(caret) 
 library(dplyr) 
 library(ggplot2)
-
+#import and read data
 pos=fread("pos.txt")
 tender=fread("tender_type.txt")
 member=fread('members.txt')
