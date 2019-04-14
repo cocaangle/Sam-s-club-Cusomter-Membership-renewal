@@ -9,7 +9,7 @@ tender=fread("tender_type.txt")
 member=fread('members.txt')
 dmm=fread("dmm_gmm.txt")
 
-##Split training and testing dataset
+#Split training and testing dataset(1:1)
 set.seed(5) 
 member_sample=member[sample(nrow(member), 20000), ] 
 member_train=member_sample[1:10000,]
